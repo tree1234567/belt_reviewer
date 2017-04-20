@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>{{book.title}}</h1>
+    <h3>{{book.author}}</h3>
+    <h4><a href="{% url 'book_reviews:homepage'%}">Home</a></h4>
+    <h2>Reviews:</h2>
+    {% for review in reviews %}
+        <p>{{review.rating}} star out of 5</p>
+        <p><a href="{% url 'book_reviews:user_page' id=review.user.id %}">{{review.user.first_name}}</a> says: {{review.review}}</p>
+        {% if request.session.email == review.user.email %}
+            <a href="{% url 'book_reviews:delete_review' id=review.id book_id=book.id %}">delete</a>
+        {% endif %}
+        <p>Posted on: {{review.created_at}}</p>
+    {% endfor %}
+
+    <h3>Review this book!</h3>
+    <form action="{% url 'book_reviews:create_review' id=book.id %}" method="POST">
+        <textarea rows="8" cols="40" name="review"></textarea><br>
+        Rating:
+        <select name='stars'>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select><br>
+        <input type="submit" value="Review Book">
+        {% csrf_token %}
+    </form>
+
+
+
+
+
+</body>
+</html>

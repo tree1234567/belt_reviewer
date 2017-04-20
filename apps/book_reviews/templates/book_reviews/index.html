@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Welcome</h1>
+    <h3>Register</h3>
+    <form action="{% url 'book_reviews:register'%}" method="POST"><br>
+        First Name: <input type="text" name="first_name"><br>
+        Last Name: <input type="text" name="last_name"><br>
+        Email: <input type="text" name="email"><br>
+        Password: <input type="text" name="password"><br>
+        Confirm Password: <input type="text" name="confirm_password"><br>
+        <input type="submit" value="Register">
+        {% csrf_token %}
+    </form>
+     {% for message in messages %}
+        <p>{{message}}</p>
+    {% endfor %}
+    <h3>Login</h3>
+    <form action="{% url 'book_reviews:login'%}" method="POST"><br>
+        Email: <input type="text" name="email"><br>
+        Password: <input type="text" name="password"><br>
+        <input type="submit" value="Login">
+        {% csrf_token %}
+    </form>
+
+
+</body>
+</html>
